@@ -1,0 +1,61 @@
+name: Test Create addon 26.2 port
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'RUN_PORT_TEST'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Create Fly 26.2
+        uses: actions/checkout@v4
+        with:
+          repository: ZurrTum/Create-Fly
+          ref: 26.2
+          path: Create-Fly
+
+      - name: Checkout CDP 26.2 port
+        uses: actions/checkout@v4
+        with:
+          repository: Hassan3-4/GPT
+          ref: cdp-26.2-port
+          path: CreateDragonsPlus
+
+      - name: Checkout CEI 26.2 port
+        uses: actions/checkout@v4
+        with:
+          repository: Hassan3-4/GPT
+          ref: cei-26.2-port
+          path: CreateEnchantmentIndustry
+
+      - name: Set up Java 25
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '25'
+          cache: gradle
+
+      - name: Build Create Fly
+        working-directory: Create-Fly
+        run: |
+          chmod +x gradlew
+          ./gradlew clean build --stacktrace --no-daemon
+
+      - name: Build Create Dragons Plus
+        working-directory: CreateDragonsPlus
+        run: |
+          chmod +x gradlew
+          ./gradlew clean build --stacktrace --no-daemon
+
+      - name: Build Create Enchantment Industry
+        working-directory: CreateEnchantmentIndustry
+        run: |
+          chmod +x gradlew
+          ./gradlew clean build --stacktrace --no-daemon
