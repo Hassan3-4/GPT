@@ -2,14 +2,13 @@
   "schemaVersion": 1,
   "id": "create_dragons_plus",
   "version": "${version}",
-  "name": "Create: Dragons Plus",
-  "description": "Library mod for DragonsPlusMinecraft Create add-ons.",
+  "name": "Create: Dragons Plus (CEI Compatibility)",
+  "description": "Minecraft 26.2 compatibility subset required by Create: Enchantment Industry.",
   "authors": ["DragonsPlus"],
   "contributors": ["YU322142 (unofficial Fabric 1.21.11 port)", "Hassan3-4 26.2 port workspace"],
   "contact": {
     "homepage": "https://github.com/DragonsPlusMinecraft/CreateDragonsPlus",
-    "sources": "https://github.com/YU322142/CreateDragonsPlus",
-    "issues": "https://github.com/YU322142/CreateDragonsPlus/issues"
+    "sources": "https://github.com/YU322142/CreateDragonsPlus"
   },
   "license": "LGPL-3.0-or-later",
   "environment": "*",
@@ -17,7 +16,6 @@
     "main": ["plus.dragons.createdragonsplus.common.CDPCommon"],
     "client": ["plus.dragons.createdragonsplus.client.CDPClient"]
   },
-  "mixins": ["create_dragons_plus.mixins.json"],
   "depends": {
     "fabricloader": ">=0.19.3",
     "minecraft": ">=26.2- <26.3-",
