@@ -24,7 +24,7 @@ import net.minecraft.world.level.ItemLike;
 import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.Fluid;
 
-/** Fluent builder used for CDP's Create 6.0.10-compatible processing recipes. */
+/** Fluent builder used for CDP's Create 6-compatible processing recipes. */
 public abstract class ProcessingRecipeBuilder<P extends ProcessingRecipeParams,
         R extends ProcessingRecipe<?, P>, B extends ProcessingRecipeBuilder<P, R, B>> {
     protected final ProcessingRecipe.Factory<P, R> factory;
@@ -97,7 +97,7 @@ public abstract class ProcessingRecipeBuilder<P extends ProcessingRecipeParams,
         if (chance < 0 || chance > 1) {
             throw new IllegalArgumentException("Output chance must be between 0 and 1");
         }
-        params.results.add(new ProcessingOutput(stack.getItemHolder(), stack.getCount(), stack.getComponentsPatch(), chance));
+        params.results.add(new ProcessingOutput(stack.typeHolder(), stack.getCount(), stack.getComponentsPatch(), chance));
         return self();
     }
 
