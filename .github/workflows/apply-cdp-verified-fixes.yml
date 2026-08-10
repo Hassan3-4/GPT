@@ -1,0 +1,59 @@
+name: Apply verified CDP 26.2 API fixes
+
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'RUN_CDP_FIXES'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout CDP port branch
+        uses: actions/checkout@v4
+        with:
+          repository: Hassan3-4/GPT
+          ref: cdp-26.2-port
+          fetch-depth: 0
+
+      - name: Apply replacements verified against Create Fly 26.2
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          root = Path('src/main/java')
+          for p in root.rglob('*.java'):
+              s = p.read_text()
+              old = s
+              s = s.replace('level.random', 'level.getRandom()')
+              s = s.replace('.getItemHolder()', '.typeHolder()')
+              s = s.replace('import net.minecraft.world.entity.EntityType;', 'import net.minecraft.world.entity.EntityTypes;')
+              s = s.replace('EntityType.SNOW_GOLEM', 'EntityTypes.SNOW_GOLEM')
+              s = s.replace('EntityType.BLAZE', 'EntityTypes.BLAZE')
+              s = s.replace('EntityType.CREEPER', 'EntityTypes.CREEPER')
+              s = s.replace('EntityType.AREA_EFFECT_CLOUD', 'EntityTypes.AREA_EFFECT_CLOUD')
+              s = s.replace('recipe.assemble(input, level.registryAccess())', 'recipe.assemble(input)')
+              s = s.replace('polishing.get().value().assemble(input, level.registryAccess())', 'polishing.get().value().assemble(input)')
+              s = s.replace('recipe.assemble(new FillingInput(stack, toFill), level.registryAccess())', 'recipe.assemble(new FillingInput(stack, toFill))')
+              s = s.replace('coloringRecipe.get().value().assemble(coloringInput, level.registryAccess())', 'coloringRecipe.get().value().assemble(coloringInput)')
+              if s != old:
+                  p.write_text(s)
+          PY
+
+      - name: Commit verified replacements
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/main/java
+          if git diff --cached --quiet; then
+            echo "No replacements needed"
+            exit 0
+          fi
+          git commit -m "Port verified Minecraft 26.2 API call changes"
+          git push origin HEAD:cdp-26.2-port
