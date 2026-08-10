@@ -1,19 +1,6 @@
 /*
  * Copyright (C) 2025  DragonsPlus
  * SPDX-License-Identifier: LGPL-3.0-or-later
- *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 package plus.dragons.createdragonsplus.common.registry;
@@ -29,10 +16,10 @@ import plus.dragons.createdragonsplus.common.kinetics.fan.sanding.SandingRecipe;
 import plus.dragons.createdragonsplus.common.recipe.RecipeTypeInfo;
 
 public class CDPRecipes {
-    public static final RecipeTypeInfo<ColoringRecipe> COLORING = register("coloring", () -> new ColoringRecipe.Serializer<>(ColoringRecipe::new));
-    public static final RecipeTypeInfo<FreezingRecipe> FREEZING = register("freezing", () -> new StandardProcessingRecipe.Serializer<>(FreezingRecipe::new));
-    public static final RecipeTypeInfo<SandingRecipe> SANDING = register("sanding", () -> new StandardProcessingRecipe.Serializer<>(SandingRecipe::new));
-    public static final RecipeTypeInfo<EndingRecipe> ENDING = register("ending", () -> new StandardProcessingRecipe.Serializer<>(EndingRecipe::new));
+    public static final RecipeTypeInfo<ColoringRecipe> COLORING = register("coloring", () -> ColoringRecipe.serializer(ColoringRecipe::new));
+    public static final RecipeTypeInfo<FreezingRecipe> FREEZING = register("freezing", () -> StandardProcessingRecipe.serializer(FreezingRecipe::new));
+    public static final RecipeTypeInfo<SandingRecipe> SANDING = register("sanding", () -> StandardProcessingRecipe.serializer(SandingRecipe::new));
+    public static final RecipeTypeInfo<EndingRecipe> ENDING = register("ending", () -> StandardProcessingRecipe.serializer(EndingRecipe::new));
 
     public static void register() {
         // Static initialisation performs Fabric registry registration.
