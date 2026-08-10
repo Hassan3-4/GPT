@@ -5,9 +5,6 @@
 
 package plus.dragons.createdragonsplus.platform.create;
 
-import com.mojang.serialization.MapCodec;
-import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.crafting.RecipeInput;
 import net.minecraft.world.item.crafting.RecipeSerializer;
@@ -36,23 +33,10 @@ public abstract class StandardProcessingRecipe<T extends RecipeInput>
         }
     }
 
-    public static class Serializer<R extends StandardProcessingRecipe<?>> implements RecipeSerializer<R> {
-        private final MapCodec<R> codec;
-        private final StreamCodec<RegistryFriendlyByteBuf, R> streamCodec;
-
-        public Serializer(ProcessingRecipe.Factory<ProcessingRecipeParams, R> factory) {
-            codec = ProcessingRecipe.codec(factory, ProcessingRecipeParams.codec(ProcessingRecipeParams::new));
-            streamCodec = ProcessingRecipe.streamCodec(factory, ProcessingRecipeParams.streamCodec(ProcessingRecipeParams::new));
-        }
-
-        @Override
-        public MapCodec<R> codec() {
-            return codec;
-        }
-
-        @Override
-        public StreamCodec<RegistryFriendlyByteBuf, R> streamCodec() {
-            return streamCodec;
-        }
+    public static <R extends StandardProcessingRecipe<?>> RecipeSerializer<R> serializer(
+            ProcessingRecipe.Factory<ProcessingRecipeParams, R> factory) {
+        return new RecipeSerializer<>(
+                ProcessingRecipe.codec(factory, ProcessingRecipeParams.codec(ProcessingRecipeParams::new)),
+                ProcessingRecipe.streamCodec(factory, ProcessingRecipeParams.streamCodec(ProcessingRecipeParams::new)));
     }
 }
