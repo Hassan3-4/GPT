@@ -29,13 +29,7 @@ dependencies {
     minecraft "com.mojang:minecraft:26.2-rc-2"
     implementation "net.fabricmc:fabric-loader:0.19.3"
     implementation "net.fabricmc.fabric-api:fabric-api:0.152.0+26.2"
-
-    def localCreateFly = file("../Create-Fly/build/libs/create-fly-26.2-rc-2-6.0.9-1.jar")
-    if (!localCreateFly.isFile()) {
-        throw new GradleException("Build the sibling ZurrTum/Create-Fly 26.2 branch first")
-    }
-    implementation files(localCreateFly)
-
+    implementation "maven.modrinth:create-fly:26.2-rc-2-6.0.9-1"
     implementation "maven.modrinth:forge-config-api-port:26.2.1"
 
     def localCreateDragonsPlus = file("../CreateDragonsPlus/build/libs/create-dragons-plus-1.11.2-beta.4+fabric.26.2.jar")
