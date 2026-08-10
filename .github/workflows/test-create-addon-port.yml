@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   build-test:
@@ -27,6 +27,46 @@ jobs:
           repository: Hassan3-4/GPT
           ref: cei-26.2-port
           path: CreateEnchantmentIndustry
+
+      - name: Apply verified Minecraft 26.2 API migrations
+        working-directory: CreateEnchantmentIndustry
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          root = Path('src/main/java')
+          replacements = {
+              'net.minecraft.client.renderer.state.CameraRenderState': 'net.minecraft.client.renderer.state.level.CameraRenderState',
+              'net.minecraft.client.renderer.block.model.BakedQuad': 'net.minecraft.client.resources.model.geometry.BakedQuad',
+              'net.minecraft.client.resources.model.BlockModelRotation': 'net.minecraft.client.renderer.block.dispatch.BlockModelRotation',
+              'net.minecraft.client.renderer.LightTexture': 'net.minecraft.util.LightCoordsUtil',
+              'LightTexture.FULL_BRIGHT': 'LightCoordsUtil.FULL_BRIGHT',
+              'serverLevel.random': 'serverLevel.getRandom()',
+              'level.random': 'level.getRandom()',
+              'deployer.level().random': 'deployer.level().getRandom()',
+              'enchanter.getLevel().random': 'enchanter.getLevel().getRandom()',
+          }
+          for path in root.rglob('*.java'):
+              old = path.read_text()
+              new = old
+              for before, after in replacements.items():
+                  new = new.replace(before, after)
+              if 'EntityType.LIGHTNING_BOLT' in new or 'EntityType.SHEEP' in new:
+                  new = new.replace('EntityType.LIGHTNING_BOLT', 'EntityTypes.LIGHTNING_BOLT')
+                  new = new.replace('EntityType.SHEEP', 'EntityTypes.SHEEP')
+                  if 'import net.minecraft.world.entity.EntityTypes;' not in new:
+                      new = new.replace('import net.minecraft.world.entity.EntityType;', 'import net.minecraft.world.entity.EntityType;\nimport net.minecraft.world.entity.EntityTypes;')
+              if new != old:
+                  path.write_text(new)
+          PY
+          git diff --check
+          if ! git diff --quiet; then
+            git config user.name 'CEI 26.2 Port Bot'
+            git config user.email 'actions@users.noreply.github.com'
+            git add src/main/java
+            git commit -m 'Port verified renderer random and entity APIs to 26.2'
+            git push origin HEAD:cei-26.2-port
+          fi
 
       - name: Set up Java 25
         uses: actions/setup-java@v4
