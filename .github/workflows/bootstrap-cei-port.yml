@@ -7,6 +7,8 @@ on:
       - '.github/workflows/bootstrap-cei-port.yml'
   pull_request:
     branches: [main]
+    paths:
+      - 'RUN_BOOTSTRAP'
   workflow_dispatch:
 
 permissions:
