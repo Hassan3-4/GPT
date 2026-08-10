@@ -51,6 +51,12 @@ jobs:
           set -o pipefail
           ./gradlew clean build --stacktrace --warning-mode all --no-daemon 2>&1 | tee ../cei-build.log
 
+      - name: Snapshot CEI source
+        if: always()
+        shell: bash
+        run: |
+          tar --exclude='.gradle' --exclude='build' -czf cei-source.tar.gz -C CreateEnchantmentIndustry .
+
       - name: Upload compiler logs
         if: always()
         uses: actions/upload-artifact@v4
@@ -60,6 +66,14 @@ jobs:
             cdp-build.log
             cei-build.log
           if-no-files-found: warn
+
+      - name: Upload CEI source snapshot
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cei-source-snapshot
+          path: cei-source.tar.gz
+          if-no-files-found: error
 
       - name: Upload CEI jar
         if: success()
