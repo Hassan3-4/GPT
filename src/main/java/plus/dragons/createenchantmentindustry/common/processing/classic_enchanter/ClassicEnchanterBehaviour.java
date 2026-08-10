@@ -66,7 +66,7 @@ public class ClassicEnchanterBehaviour extends ServerFilteringBehaviour {
         var result = stack.copy();
         var availableEnchantment = filterAvailableEnchantment(stack);
         var apply = WeightedRandom.getRandomItem(
-                enchanter.getLevel().random,
+                enchanter.getLevel().getRandom(),
                 availableEnchantment.stream()
                         .map(entry -> new EnchantmentInstance(entry.getKey(), entry.getIntValue()))
                         .toList(),
@@ -81,7 +81,7 @@ public class ClassicEnchanterBehaviour extends ServerFilteringBehaviour {
                     applyLevel -= 1;
             }
             if (enchanter.cursed) {
-                if (enchanter.getLevel().random.nextFloat() < CEIConfig.processing().classicBlazeEnchanterSuperEnchantingCurseLevelDroppingRate.get()) {
+                if (enchanter.getLevel().getRandom().nextFloat() < CEIConfig.processing().classicBlazeEnchanterSuperEnchantingCurseLevelDroppingRate.get()) {
                     applyLevel = Math.max(1, apply.level() - 1);
                 }
             }

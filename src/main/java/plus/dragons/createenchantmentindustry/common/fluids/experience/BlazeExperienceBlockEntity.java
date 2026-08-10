@@ -38,6 +38,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.ai.village.poi.PoiManager;
 import net.minecraft.world.entity.ai.village.poi.PoiType;
 import net.minecraft.world.level.block.Block;
@@ -177,8 +178,8 @@ public abstract class BlazeExperienceBlockEntity extends BlazeBlockEntity {
 
         if (heat != getHeatLevelFromBlock())
             level.playSound(null, worldPosition, SoundEvents.BLAZE_AMBIENT, SoundSource.BLOCKS,
-                    .125f + level.random.nextFloat() * .125f,
-                    1.15f - level.random.nextFloat() * .25f);
+                    .125f + level.getRandom().nextFloat() * .125f,
+                    1.15f - level.getRandom().nextFloat() * .25f);
         notifyUpdate();
         return true;
     }
@@ -230,7 +231,7 @@ public abstract class BlazeExperienceBlockEntity extends BlazeBlockEntity {
 
     @SuppressWarnings("all")
     protected boolean strikeLightning(ServerLevel level, BlockPos strikePos) {
-        var lightning = EntityType.LIGHTNING_BOLT.create(level, net.minecraft.world.entity.EntitySpawnReason.TRIGGERED);
+        var lightning = EntityTypes.LIGHTNING_BOLT.create(level, net.minecraft.world.entity.EntitySpawnReason.TRIGGERED);
         if (lightning == null)
             return false;
         EXPERIENCE_LIGHTNING.add(lightning);

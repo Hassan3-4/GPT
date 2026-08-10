@@ -11,14 +11,14 @@ import com.zurrtum.create.catnip.math.AngleHelper;
 import com.zurrtum.create.client.catnip.animation.AnimationTickHolder;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.model.object.book.BookModel;
-import net.minecraft.client.renderer.LightTexture;
+import net.minecraft.util.LightCoordsUtil;
 import net.minecraft.client.renderer.SubmitNodeCollector;
 import net.minecraft.client.renderer.blockentity.BlockEntityRendererProvider;
 import net.minecraft.client.renderer.feature.ModelFeatureRenderer;
 import net.minecraft.client.renderer.item.ItemModelResolver;
 import net.minecraft.client.renderer.item.ItemStackRenderState;
 import net.minecraft.client.renderer.rendertype.RenderTypes;
-import net.minecraft.client.renderer.state.CameraRenderState;
+import net.minecraft.client.renderer.state.level.CameraRenderState;
 import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
@@ -110,7 +110,7 @@ public class ClassicBlazeEnchanterRenderer extends BlazeBlockRenderer<ClassicBla
                     state.book,
                     poseStack,
                     BOOK_MATERIAL.renderType(RenderTypes::entitySolid),
-                    LightTexture.FULL_BRIGHT,
+                    LightCoordsUtil.FULL_BRIGHT,
                     OverlayTexture.NO_OVERLAY,
                     -1,
                     bookTexture,

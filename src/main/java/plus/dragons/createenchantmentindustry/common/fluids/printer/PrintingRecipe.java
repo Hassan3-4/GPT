@@ -59,8 +59,8 @@ public class PrintingRecipe extends ProcessingRecipe<PrintingInput, PrintingReci
                 pos,
                 sound.soundEvents().getFirst().value(),
                 source,
-                sound.volume().sample(level.random),
-                sound.pitch().sample(level.random));
+                sound.volume().sample(level.getRandom()),
+                sound.pitch().sample(level.getRandom()));
     }
 
     @Override

@@ -28,6 +28,7 @@ import com.zurrtum.create.client.ponder.api.scene.SceneBuilder;
 import com.zurrtum.create.client.ponder.api.scene.SceneBuildingUtil;
 import net.minecraft.core.Direction;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -151,7 +152,7 @@ public class ClassicBlazeEnchanterScene {
         scene.world().setBlock(util.grid().at(1, 2, 1), Blocks.LIGHTNING_ROD.defaultBlockState(), true);
         scene.idle(50);
         scene.world().createEntity(level -> {
-            var lightning = EntityType.LIGHTNING_BOLT.create(level, net.minecraft.world.entity.EntitySpawnReason.TRIGGERED);
+            var lightning = EntityTypes.LIGHTNING_BOLT.create(level, net.minecraft.world.entity.EntitySpawnReason.TRIGGERED);
             lightning.setPos(Vec3.atBottomCenterOf(util.grid().at(1, 2, 1)));
             return lightning;
         });
@@ -162,7 +163,7 @@ public class ClassicBlazeEnchanterScene {
                 .pointAt(util.vector().topOf(1, 2, 1));
         scene.idle(50);
         scene.world().createEntity(level -> {
-            var lightning = EntityType.LIGHTNING_BOLT.create(level, net.minecraft.world.entity.EntitySpawnReason.TRIGGERED);
+            var lightning = EntityTypes.LIGHTNING_BOLT.create(level, net.minecraft.world.entity.EntitySpawnReason.TRIGGERED);
             lightning.setPos(Vec3.atBottomCenterOf(util.grid().at(1, 2, 1)));
             return lightning;
         });

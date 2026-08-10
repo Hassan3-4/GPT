@@ -37,6 +37,7 @@ import net.minecraft.core.particles.BlockParticleOption;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.WalkAnimationState;
 import net.minecraft.world.entity.animal.sheep.Sheep;
 import net.minecraft.world.item.DyeColor;
@@ -196,7 +197,7 @@ public class ExperienceScene {
         scene.idle(30);
 
         ElementLink<EntityElement> sheep = scene.world().createEntity(w -> {
-            Sheep entity = EntityType.SHEEP.create(w, net.minecraft.world.entity.EntitySpawnReason.TRIGGERED);
+            Sheep entity = EntityTypes.SHEEP.create(w, net.minecraft.world.entity.EntitySpawnReason.TRIGGERED);
             entity.setColor(DyeColor.PINK);
             Vec3 p = util.vector().topOf(util.grid().at(3, 3, 10));
             entity.setPos(p.x, p.y, p.z);
@@ -259,7 +260,7 @@ public class ExperienceScene {
         scene.world().setKineticSpeed(deployer, 32f);
 
         ElementLink<EntityElement> sheep2 = scene.world().createEntity(w -> {
-            Sheep entity = EntityType.SHEEP.create(w, net.minecraft.world.entity.EntitySpawnReason.TRIGGERED);
+            Sheep entity = EntityTypes.SHEEP.create(w, net.minecraft.world.entity.EntitySpawnReason.TRIGGERED);
             entity.setColor(DyeColor.PINK);
             Vec3 p = util.vector().topOf(util.grid().at(6, 1, 6));
             entity.setPos(p.x, p.y, p.z);
@@ -456,7 +457,7 @@ public class ExperienceScene {
         scene.world().showSection(util.select().position(1, 2, 1), Direction.DOWN);
         scene.idle(55);
         scene.world().createEntity(level -> {
-            var lightning = EntityType.LIGHTNING_BOLT.create(level, net.minecraft.world.entity.EntitySpawnReason.TRIGGERED);
+            var lightning = EntityTypes.LIGHTNING_BOLT.create(level, net.minecraft.world.entity.EntitySpawnReason.TRIGGERED);
             lightning.setPos(Vec3.atBottomCenterOf(util.grid().at(1, 2, 1)));
             return lightning;
         });

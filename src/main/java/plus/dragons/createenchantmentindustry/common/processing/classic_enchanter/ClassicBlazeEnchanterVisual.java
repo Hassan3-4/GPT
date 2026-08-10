@@ -41,7 +41,7 @@ import java.util.function.Consumer;
 import com.zurrtum.create.client.catnip.animation.AnimationTickHolder;
 import com.zurrtum.create.catnip.math.AngleHelper;
 import com.zurrtum.create.client.catnip.render.SpriteShiftEntry;
-import net.minecraft.client.renderer.LightTexture;
+import net.minecraft.util.LightCoordsUtil;
 import net.minecraft.core.Direction;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.Nullable;
@@ -66,7 +66,7 @@ public class ClassicBlazeEnchanterVisual extends AbstractBlockEntityVisual<Class
         this.active = blockEntity.isActive();
         PartialModel blazeModel = BlazeBurnerRenderer.getBlazeModel(heatLevel, active);
         this.head = instancerProvider().instancer(InstanceTypes.TRANSFORMED, Models.partial(blazeModel)).createInstance();
-        this.head.light(LightTexture.FULL_BRIGHT);
+        this.head.light(LightCoordsUtil.FULL_BRIGHT);
         animate(partialTicks);
     }
 
@@ -97,8 +97,8 @@ public class ClassicBlazeEnchanterVisual extends AbstractBlockEntityVisual<Class
                 largeRods = instancerProvider().instancer(InstanceTypes.TRANSFORMED, Models.partial(rodsModel2))
                         .createInstance();
 
-                smallRods.light(LightTexture.FULL_BRIGHT);
-                largeRods.light(LightTexture.FULL_BRIGHT);
+                smallRods.light(LightCoordsUtil.FULL_BRIGHT);
+                largeRods.light(LightCoordsUtil.FULL_BRIGHT);
 
             } else if (!needsRods && hasRods) {
                 if (smallRods != null)
@@ -125,7 +125,7 @@ public class ClassicBlazeEnchanterVisual extends AbstractBlockEntityVisual<Class
                 goggles = instancerProvider()
                         .instancer(InstanceTypes.TRANSFORMED, Models.partial(gogglesModel))
                         .createInstance();
-                goggles.light(LightTexture.FULL_BRIGHT);
+                goggles.light(LightCoordsUtil.FULL_BRIGHT);
             }
         } else {
             if (gogglesModel == null) {
@@ -191,7 +191,7 @@ public class ClassicBlazeEnchanterVisual extends AbstractBlockEntityVisual<Class
                 .instancer(AllInstanceTypes.SCROLLING, Models.partial(AllPartialModels.BLAZE_BURNER_FLAME))
                 .createInstance();
 
-        flame.position(getVisualPosition()).light(LightTexture.FULL_BRIGHT);
+        flame.position(getVisualPosition()).light(LightCoordsUtil.FULL_BRIGHT);
 
         SpriteShiftEntry spriteShift = heatLevel == BlazeBurnerBlock.HeatLevel.SEETHING
                 ? AllSpriteShifts.SUPER_BURNER_FLAME

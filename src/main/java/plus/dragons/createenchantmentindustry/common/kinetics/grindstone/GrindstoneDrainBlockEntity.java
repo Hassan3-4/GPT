@@ -223,7 +223,7 @@ public class GrindstoneDrainBlockEntity extends KineticBlockEntity implements Cl
             if (applyGrindingFluidOperation(recipe)) {
                 awardGrindingFluidStats(recipe);
                 inventory.clearContent();
-                var grinded = recipe.rollResults(level.random);
+                var grinded = recipe.rollResults(level.getRandom());
                 for (int i = 0; i < grinded.size(); i++)
                     inventory.setItem(i + 1, grinded.get(i));
                 return;
@@ -271,7 +271,7 @@ public class GrindstoneDrainBlockEntity extends KineticBlockEntity implements Cl
 
         Vec3 pos = Vec3.atBottomCenterOf(this.worldPosition).add(0, 1, 0);
         for (int i = 0; i < 10; i++) {
-            Vec3 motion = VecHelper.offsetRandomly(new Vec3(0, 0.25f, 0), level.random, .125f);
+            Vec3 motion = VecHelper.offsetRandomly(new Vec3(0, 0.25f, 0), level.getRandom(), .125f);
             level.addParticle(particleData, pos.x, pos.y, pos.z, motion.x, motion.y, motion.y);
         }
     }
@@ -302,7 +302,7 @@ public class GrindstoneDrainBlockEntity extends KineticBlockEntity implements Cl
                 pos.y,
                 pos.z + inputSide.getStepZ() * offset,
                 inputSide.getStepX() * speed,
-                level.random.nextFloat() * speed,
+                level.getRandom().nextFloat() * speed,
                 inputSide.getStepZ() * speed);
     }
 

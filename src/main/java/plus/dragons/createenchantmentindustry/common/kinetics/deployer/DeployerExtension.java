@@ -79,7 +79,7 @@ public final class DeployerExtension {
         if (experience <= 0)
             return;
         int nuggets = experience / 3;
-        if (deployer.level().random.nextFloat() < (experience % 3) / 3f)
+        if (deployer.level().getRandom().nextFloat() < (experience % 3) / 3f)
             nuggets++;
         if (nuggets > 0) {
             deployer.getInventory().placeItemBackInInventory(new ItemStack(AllItems.EXP_NUGGET, nuggets));

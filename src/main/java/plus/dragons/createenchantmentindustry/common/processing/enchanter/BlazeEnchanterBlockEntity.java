@@ -229,7 +229,7 @@ public class BlazeEnchanterBlockEntity extends BlazeExperienceBlockEntity implem
                 nextSeed();
                 enchanter.update(heldItem);
                 notifyUpdate();
-                level.playSound(null, worldPosition, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.BLOCKS, 1.0F, level.random.nextFloat() * 0.1F + 0.9F);
+                level.playSound(null, worldPosition, SoundEvents.ENCHANTMENT_TABLE_USE, SoundSource.BLOCKS, 1.0F, level.getRandom().nextFloat() * 0.1F + 0.9F);
             } else {
                 if (processingTime != -1) {
                     processingTime = -1;
@@ -248,7 +248,7 @@ public class BlazeEnchanterBlockEntity extends BlazeExperienceBlockEntity implem
 
     public void nextSeed() {
         assert level != null;
-        seed = level.random.nextLong();
+        seed = level.getRandom().nextLong();
     }
 
     public int getMaxEnchantLevel() {
