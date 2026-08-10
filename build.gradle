@@ -12,13 +12,8 @@ base {
 
 repositories {
     mavenCentral()
-    maven { url = "https://mvn.devos.one/snapshots" }
-    maven { url = "https://maven.blamejared.com" }
-    maven { url = "https://maven.terraformersmc.com/releases" }
     exclusiveContent {
-        forRepository {
-            maven { url = "https://api.modrinth.com/maven" }
-        }
+        forRepository { maven { url = "https://api.modrinth.com/maven" } }
         filter { includeGroup "maven.modrinth" }
     }
 }
@@ -28,13 +23,25 @@ dependencies {
     implementation "net.fabricmc:fabric-loader:0.19.3"
     implementation "net.fabricmc.fabric-api:fabric-api:0.152.0+26.2"
     def localCreateFlyRuntime = file("../Create-Fly/build/libs/create-fly-26.2-rc-2-6.0.9-1.jar")
-    if (!localCreateFlyRuntime.isFile()) {
+    if (!localCreateFlyRuntime.isFile())
         throw new GradleException("Build the sibling ZurrTum/Create-Fly 26.2 branch first")
-    }
     implementation files(localCreateFlyRuntime)
     implementation "maven.modrinth:forge-config-api-port:26.2.1"
     compileOnly "javax.annotation:javax.annotation-api:1.3.2"
     compileOnly "com.google.code.findbugs:jsr305:3.0.2"
+}
+
+sourceSets.main.java {
+    setSrcDirs(["src/main/java"])
+    include "plus/dragons/createdragonsplus/common/CDPCommon.java"
+    include "plus/dragons/createdragonsplus/common/registry/CDPBlocks.java"
+    include "plus/dragons/createdragonsplus/common/registry/CDPBlockEntities.java"
+    include "plus/dragons/createdragonsplus/common/registry/CDPItems.java"
+    include "plus/dragons/createdragonsplus/common/fluids/hatch/**"
+    include "plus/dragons/createdragonsplus/client/CDPClient.java"
+    include "plus/dragons/createdragonsplus/client/texture/CDPGuiTextures.java"
+    include "plus/dragons/createdragonsplus/platform/create/**"
+    include "plus/dragons/createdragonsplus/util/FieldsNullabilityUnknownByDefault.java"
 }
 
 sourceSets.main.resources {
@@ -42,76 +49,15 @@ sourceSets.main.resources {
     srcDir "src/main/translations"
 }
 
-sourceSets.main.java {
-    srcDir "src/integration/dyenamics/java"
-    srcDir "src/integration/dye_depot/java"
-    srcDir "src/integration/arts_and_crafts/java"
-    exclude "plus/dragons/createdragonsplus/integration/dyenamics/DyenamicsExtension.java"
-    exclude "plus/dragons/createdragonsplus/integration/dye_depot/DyeDepotExtension.java"
-    exclude "plus/dragons/createdragonsplus/integration/arts_and_crafts/ArtsAndCraftsExtension.java"
-    exclude "plus/dragons/createdragonsplus/integration/dyenamics/package-info.java"
-    exclude "plus/dragons/createdragonsplus/integration/dye_depot/package-info.java"
-    exclude "plus/dragons/createdragonsplus/integration/arts_and_crafts/package-info.java"
-    exclude "plus/dragons/createdragonsplus/data/**"
-    exclude "plus/dragons/createdragonsplus/common/CDPRegistrate.java"
-    exclude "plus/dragons/createdragonsplus/common/registrate/**"
-    exclude "plus/dragons/createdragonsplus/common/advancements/**"
-    exclude "plus/dragons/createdragonsplus/common/recipe/BaseRecipeBuilder.java"
-    exclude "plus/dragons/createdragonsplus/common/recipe/RecipeConverter.java"
-    exclude "plus/dragons/createdragonsplus/common/recipe/UpdateRecipesEvent.java"
-    exclude "plus/dragons/createdragonsplus/common/registry/CDPCapabilities.java"
-    exclude "plus/dragons/createdragonsplus/common/registry/CDPConditions.java"
-    exclude "plus/dragons/createdragonsplus/common/registry/CDPCriterions.java"
-    exclude "plus/dragons/createdragonsplus/common/registry/CDPDataMaps.java"
-    exclude "plus/dragons/createdragonsplus/common/registry/CDPLoots.java"
-    exclude "plus/dragons/createdragonsplus/common/registry/CDPBlockFreezers.java"
-    exclude "plus/dragons/createdragonsplus/integration/CDPCompatFix.java"
-    exclude "plus/dragons/createdragonsplus/integration/immersive_engineering/**"
-    exclude "plus/dragons/createdragonsplus/integration/jei/**"
-    exclude "plus/dragons/createdragonsplus/client/color/SimpleItemColors.java"
-    exclude "plus/dragons/createdragonsplus/client/ponder/**"
-    exclude "plus/dragons/createdragonsplus/client/renderer/blockentity/**"
-    exclude "plus/dragons/createdragonsplus/common/behaviours/**"
-    exclude "plus/dragons/createdragonsplus/common/fluids/SolidRenderFluidType.java"
-    exclude "plus/dragons/createdragonsplus/common/fluids/dragonBreath/DragonBreathFluidType.java"
-    exclude "plus/dragons/createdragonsplus/common/fluids/dye/DyeFluidType.java"
-    exclude "plus/dragons/createdragonsplus/common/fluids/WaterAndLavaLoggedBlock.java"
-    exclude "plus/dragons/createdragonsplus/common/fluids/tank/**"
-    exclude "plus/dragons/createdragonsplus/common/processing/blaze/**"
-    exclude "plus/dragons/createdragonsplus/config/StressConfig.java"
-    exclude "plus/dragons/createdragonsplus/mixin/neoforge/**"
-    exclude "plus/dragons/createdragonsplus/mixin/util/RunDataMixinCondition.java"
-    exclude "plus/dragons/createdragonsplus/mixin/minecraft/IngredientValueMixin.java"
-    exclude "plus/dragons/createdragonsplus/mixin/minecraft/RecipeManagerAccessor.java"
-    exclude "plus/dragons/createdragonsplus/mixin/minecraft/ReloadableServerResourcesMixin.java"
-    exclude "plus/dragons/createdragonsplus/mixin/create/AirFlowParticleMixin.java"
-    exclude "plus/dragons/createdragonsplus/mixin/create/AirCurrentMixin.java"
-    exclude "plus/dragons/createdragonsplus/mixin/create/BlockEntityBehaviourMixin.java"
-    exclude "plus/dragons/createdragonsplus/mixin/create/FluidFillingBehaviourMixin.java"
-    exclude "plus/dragons/createdragonsplus/mixin/create/MechanicalMixerBlockEntityMixin.java"
-    exclude "plus/dragons/createdragonsplus/mixin/create/OpenEndFluidHandlerMixin.java"
-    exclude "plus/dragons/createdragonsplus/mixin/create/OpenEndedPipeMixin.java"
-    exclude "plus/dragons/createdragonsplus/mixin/create/ContraptionMixin.java"
-    exclude "plus/dragons/createdragonsplus/mixin/minecraft/BottleItemMixin.java"
-    exclude "plus/dragons/createdragonsplus/mixin/minecraft/ConcretePowderBlockMixin.java"
-}
-
 def resolvedModVersion = version.toString()
-
 processResources {
     inputs.property "version", resolvedModVersion
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
-    filesMatching("fabric.mod.json") {
-        expand "version": resolvedModVersion
-    }
+    filesMatching("fabric.mod.json") { expand "version": resolvedModVersion }
     exclude "META-INF/**"
     exclude "pack.mcmeta"
     exclude "data/**/data_maps/**"
     exclude "**/*fragile_fluid_tank*.json"
-    from("src/main/resources/assets/create_dragons_plus/textures/item/package") {
-        include "rare_blaze.png", "rare_marble_gate.png"
-        into "assets/create_dragons_plus/textures/block/package"
-    }
 }
 
 tasks.withType(JavaCompile).configureEach {
