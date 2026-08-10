@@ -20,6 +20,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.ItemStackTemplate;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.ShapedRecipePattern;
 import net.minecraft.world.level.ItemLike;
@@ -31,50 +32,30 @@ public final class CreateFlyMechanicalCraftingRecipeBuilder {
     private final List<String> pattern = new ArrayList<>();
     private boolean acceptMirrored = true;
 
-    public CreateFlyMechanicalCraftingRecipeBuilder(ItemLike result, int count) {
-        this.result = new ItemStack(result, count);
-    }
-
-    public CreateFlyMechanicalCraftingRecipeBuilder key(char symbol, ItemLike item) {
-        return key(symbol, Ingredient.of(item));
-    }
-
+    public CreateFlyMechanicalCraftingRecipeBuilder(ItemLike result, int count) { this.result = new ItemStack(result, count); }
+    public CreateFlyMechanicalCraftingRecipeBuilder key(char symbol, ItemLike item) { return key(symbol, Ingredient.of(item)); }
     public CreateFlyMechanicalCraftingRecipeBuilder key(char symbol, TagKey<Item> tag) {
-        return key(symbol, Ingredient.of(StreamSupport.stream(BuiltInRegistries.ITEM.getTagOrEmpty(tag).spliterator(), false)
-                .map(Holder::value)));
+        return key(symbol, Ingredient.of(StreamSupport.stream(BuiltInRegistries.ITEM.getTagOrEmpty(tag).spliterator(), false).map(Holder::value)));
     }
-
     public CreateFlyMechanicalCraftingRecipeBuilder key(char symbol, Ingredient ingredient) {
-        if (symbol == ' ' || key.putIfAbsent(symbol, ingredient) != null) {
+        if (symbol == ' ' || key.putIfAbsent(symbol, ingredient) != null)
             throw new IllegalArgumentException("Mechanical crafting symbol must be unique and non-whitespace: " + symbol);
-        }
         return this;
     }
-
     public CreateFlyMechanicalCraftingRecipeBuilder patternLine(String line) {
-        if (line.isEmpty() || !pattern.isEmpty() && line.length() != pattern.getFirst().length()) {
+        if (line.isEmpty() || !pattern.isEmpty() && line.length() != pattern.getFirst().length())
             throw new IllegalArgumentException("Mechanical crafting pattern lines must be non-empty and equal-width");
-        }
-        pattern.add(line);
-        return this;
+        pattern.add(line); return this;
     }
-
-    public CreateFlyMechanicalCraftingRecipeBuilder disallowMirrored() {
-        acceptMirrored = false;
-        return this;
-    }
+    public CreateFlyMechanicalCraftingRecipeBuilder disallowMirrored() { acceptMirrored = false; return this; }
 
     public MechanicalCraftingRecipe build() {
-        if (pattern.isEmpty()) {
-            throw new IllegalStateException("Mechanical crafting recipe has no pattern");
-        }
-        return new MechanicalCraftingRecipe(ShapedRecipePattern.of(key, pattern), result.copy(), acceptMirrored);
+        if (pattern.isEmpty()) throw new IllegalStateException("Mechanical crafting recipe has no pattern");
+        ItemStackTemplate template = new ItemStackTemplate(result.typeHolder(), result.getCount(), result.getComponentsPatch());
+        return new MechanicalCraftingRecipe(ShapedRecipePattern.of(key, pattern), template, acceptMirrored);
     }
 
-    public void build(RecipeOutput output, Identifier id) {
-        output.accept(ResourceKey.create(Registries.RECIPE, id), build(), null);
-    }
-
+    public void build(RecipeOutput output, Identifier id) { output.accept(ResourceKey.create(Registries.RECIPE, id), build(), null); }
     public void build(RecipeOutput output) {
         Identifier id = result.typeHolder().unwrapKey().orElseThrow().identifier();
         build(output, id);
