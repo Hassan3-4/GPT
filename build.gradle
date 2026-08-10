@@ -38,6 +38,7 @@ sourceSets.main.java {
     include "plus/dragons/createdragonsplus/common/registry/CDPBlockEntities.java"
     include "plus/dragons/createdragonsplus/common/registry/CDPItems.java"
     include "plus/dragons/createdragonsplus/common/fluids/hatch/**"
+    include "plus/dragons/createdragonsplus/common/fluids/StandardDispenserBehaviour.java"
     include "plus/dragons/createdragonsplus/client/CDPClient.java"
     include "plus/dragons/createdragonsplus/client/texture/CDPGuiTextures.java"
     include "plus/dragons/createdragonsplus/platform/create/**"
