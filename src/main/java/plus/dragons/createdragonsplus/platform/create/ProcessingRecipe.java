@@ -15,7 +15,6 @@ import com.zurrtum.create.infrastructure.fluids.FluidStack;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Supplier;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.util.RandomSource;
@@ -28,9 +27,7 @@ import net.minecraft.world.item.crafting.RecipeType;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * Functional counterpart to Create 6.0.10's processing-recipe base class.
- * It deliberately implements Create Fly's rollable-recipe contract so fan
- * processing keeps Create's normal chance and stack-merging behaviour.
+ * Functional counterpart to Create 6 processing recipes for the Fabric port.
  */
 public abstract class ProcessingRecipe<T extends RecipeInput, P extends ProcessingRecipeParams>
         implements CreateRollableRecipe<T> {
@@ -145,12 +142,12 @@ public abstract class ProcessingRecipe<T extends RecipeInput, P extends Processi
     }
 
     @Override
-    public ItemStack assemble(T input, HolderLookup.Provider provider) {
+    public ItemStack assemble(T input) {
         ItemStack junk = CreateRecipe.getJunk(input.getItem(0));
         if (junk != null) {
             return junk;
         }
-        return getResultItem(provider).copy();
+        return getResultItem().copy();
     }
 
     @Override
@@ -162,7 +159,7 @@ public abstract class ProcessingRecipe<T extends RecipeInput, P extends Processi
         return rollResults(random);
     }
 
-    public ItemStack getResultItem(HolderLookup.Provider provider) {
+    public ItemStack getResultItem() {
         return results.isEmpty() ? ItemStack.EMPTY : results.getFirst().create();
     }
 
