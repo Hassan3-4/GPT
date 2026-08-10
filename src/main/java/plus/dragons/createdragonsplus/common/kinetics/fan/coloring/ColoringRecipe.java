@@ -6,23 +6,12 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
- *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <https://www.gnu.org/licenses/>.
  */
 
 package plus.dragons.createdragonsplus.common.kinetics.fan.coloring;
 
-import com.mojang.serialization.MapCodec;
 import plus.dragons.createdragonsplus.platform.create.ProcessingRecipe;
 import plus.dragons.createdragonsplus.platform.create.ProcessingRecipeBuilder;
-import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
@@ -73,23 +62,10 @@ public class ColoringRecipe extends ProcessingRecipe<ColoringRecipeInput, Colori
         }
     }
 
-    public static class Serializer<R extends ColoringRecipe> implements RecipeSerializer<R> {
-        private final MapCodec<R> codec;
-        private final StreamCodec<RegistryFriendlyByteBuf, R> streamCodec;
-
-        public Serializer(ProcessingRecipe.Factory<ColoringRecipeParams, R> factory) {
-            this.codec = ProcessingRecipe.codec(factory, ColoringRecipeParams.CODEC);
-            this.streamCodec = ProcessingRecipe.streamCodec(factory, ColoringRecipeParams.STREAM_CODEC);
-        }
-
-        @Override
-        public MapCodec<R> codec() {
-            return codec;
-        }
-
-        @Override
-        public StreamCodec<RegistryFriendlyByteBuf, R> streamCodec() {
-            return streamCodec;
-        }
+    public static <R extends ColoringRecipe> RecipeSerializer<R> serializer(
+            ProcessingRecipe.Factory<ColoringRecipeParams, R> factory) {
+        return new RecipeSerializer<>(
+                ProcessingRecipe.codec(factory, ColoringRecipeParams.CODEC),
+                ProcessingRecipe.streamCodec(factory, ColoringRecipeParams.STREAM_CODEC));
     }
 }
