@@ -1,0 +1,14 @@
+{
+  "required": true,
+  "package": "plus.dragons.createdragonsplus.mixin",
+  "plugin": "plus.dragons.createdragonsplus.mixin.CDPMixinConfigPlugin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "create.PotionMixingRecipesMixin"
+  ],
+  "client": [],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "minVersion": "0.8"
+}

@@ -1,0 +1,29 @@
+{
+  "schemaVersion": 1,
+  "id": "create_dragons_plus",
+  "version": "${version}",
+  "name": "Create: Dragons Plus",
+  "description": "Library mod for DragonsPlusMinecraft Create add-ons.",
+  "authors": ["DragonsPlus"],
+  "contributors": ["YU322142 (unofficial Fabric 1.21.11 port)"],
+  "contact": {
+    "homepage": "https://github.com/DragonsPlusMinecraft/CreateDragonsPlus",
+    "sources": "https://github.com/YU322142/CreateDragonsPlus",
+    "issues": "https://github.com/YU322142/CreateDragonsPlus/issues"
+  },
+  "license": "LGPL-3.0-or-later",
+  "environment": "*",
+  "entrypoints": {
+    "main": ["plus.dragons.createdragonsplus.common.CDPCommon"],
+    "client": ["plus.dragons.createdragonsplus.client.CDPClient"]
+  },
+  "mixins": ["create_dragons_plus.mixins.json"],
+  "depends": {
+    "fabricloader": ">=0.18.4",
+    "minecraft": ">=1.21.11 <1.22",
+    "java": ">=21",
+    "fabric-api": ">=0.141.4",
+    "forgeconfigapiport": ">=21.11.1",
+    "create": ">=6.0.9-7"
+  }
+}

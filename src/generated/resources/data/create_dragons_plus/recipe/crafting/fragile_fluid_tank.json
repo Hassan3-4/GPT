@@ -1,0 +1,26 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "g": "minecraft:gold_ingot",
+    "n": "minecraft:barrel",
+    "t": "create:copper_sheet"
+  },
+  "pattern": [
+    " t ",
+    "gng",
+    " t "
+  ],
+  "result": {
+    "count": 1,
+    "id": "create_dragons_plus:fragile_fluid_tank"
+  },
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "sable"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "type": "create:mixing",
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "dyenamics"
+      ]
+    }
+  ],
+  "ingredients": [
+    "#create_dragons_plus:dyes/dyenamics/navy"
+  ],
+  "fluid_ingredients": [
+    {
+      "type": "fluid_stack",
+      "amount": 20250,
+      "fluid": "minecraft:water"
+    }
+  ],
+  "fluid_results": [
+    {
+      "amount": 20250,
+      "id": "create_dragons_plus:dyenamics_navy_dye"
+    }
+  ]
+}

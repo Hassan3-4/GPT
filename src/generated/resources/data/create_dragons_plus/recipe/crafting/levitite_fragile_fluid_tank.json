@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "l": "create_dragons_plus:fragile_fluid_tank",
+    "t": "aeronautics:levitite_blend_bucket"
+  },
+  "pattern": [
+    "lll",
+    "ltl",
+    "lll"
+  ],
+  "result": {
+    "count": 8,
+    "id": "create_dragons_plus:levitite_fragile_fluid_tank"
+  },
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "sable"
+      ]
+    }
+  ]
+}

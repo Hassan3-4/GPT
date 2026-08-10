@@ -1,0 +1,12 @@
+{
+  "type": "create:filling",
+  "ingredient": "minecraft:glass_bottle",
+  "fluid_ingredient": {
+    "type": "fluid_stack",
+    "amount": 20250,
+    "fluid": "create_dragons_plus:dragon_breath"
+  },
+  "result": {
+    "id": "minecraft:dragon_breath"
+  }
+}

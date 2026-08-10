@@ -1,0 +1,24 @@
+{
+  "type": "create:mixing",
+  "heat_requirement": "heated",
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "dyenamics"
+      ]
+    }
+  ],
+  "fluid_ingredients": [
+    {
+      "type": "fluid_stack",
+      "amount": 20250,
+      "fluid": "create_dragons_plus:dyenamics_peach_dye"
+    }
+  ],
+  "results": [
+    {
+      "id": "dyenamics:peach_dye"
+    }
+  ]
+}

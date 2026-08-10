@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    "#c:ingots/copper",
+    "create:item_drain"
+  ],
+  "result": {
+    "count": 1,
+    "id": "create_dragons_plus:fluid_hatch"
+  }
+}

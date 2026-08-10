@@ -1,0 +1,27 @@
+{
+  "type": "create:mixing",
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": [
+        "dye_depot"
+      ]
+    }
+  ],
+  "ingredients": [
+    "#create_dragons_plus:dyes/dye_depot/ginger"
+  ],
+  "fluid_ingredients": [
+    {
+      "type": "fluid_stack",
+      "amount": 20250,
+      "fluid": "minecraft:water"
+    }
+  ],
+  "fluid_results": [
+    {
+      "amount": 20250,
+      "id": "create_dragons_plus:dye_depot_ginger_dye"
+    }
+  ]
+}
