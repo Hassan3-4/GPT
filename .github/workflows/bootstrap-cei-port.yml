@@ -36,7 +36,7 @@ jobs:
           git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git checkout -B cei-26.2-port
           find . -mindepth 1 -maxdepth 1 ! -name .git ! -name upstream-cei -exec rm -rf {} +
-          rsync -a --exclude='.git' upstream-cei/ ./
+          rsync -a --exclude='.git' --exclude='.github/workflows/' upstream-cei/ ./
           rm -rf upstream-cei .gitmodules
           git add -A
           git commit -m "Import CEI Fabric 1.21.11 port as 26.2 base"
