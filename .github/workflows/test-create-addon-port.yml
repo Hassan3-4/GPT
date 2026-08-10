@@ -56,6 +56,24 @@ jobs:
 
       - name: Build Create Enchantment Industry
         working-directory: CreateEnchantmentIndustry
+        shell: bash
         run: |
           chmod +x gradlew
-          ./gradlew clean build --stacktrace --no-daemon
+          set -o pipefail
+          ./gradlew clean build --stacktrace --warning-mode all --no-daemon 2>&1 | tee ../cei-build.log
+
+      - name: Upload CEI compiler log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cei-build-log
+          path: cei-build.log
+          if-no-files-found: warn
+
+      - name: Upload CEI jar
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: cei-26.2-jar
+          path: CreateEnchantmentIndustry/build/libs/*.jar
+          if-no-files-found: error
