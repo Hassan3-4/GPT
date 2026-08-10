@@ -136,7 +136,7 @@ public class ShapedRecipeBuilder extends BaseRecipeBuilder<ShapedRecipe, ShapedR
     @Override
     public RecipeHolder<ShapedRecipe> build() {
         if (id == null) {
-            id = result.getItemHolder().unwrapKey().orElseThrow().location();
+            id = result.typeHolder().unwrapKey().orElseThrow().location();
         }
         var pattern = ShapedRecipePattern.of(this.key, this.pattern);
         var recipe = new ShapedRecipe(group, RecipeBuilder.determineBookCategory(category), pattern, result, showNotification);
@@ -146,7 +146,7 @@ public class ShapedRecipeBuilder extends BaseRecipeBuilder<ShapedRecipe, ShapedR
     @Override
     public @Nullable AdvancementHolder buildAdvancement() {
         if (id == null) {
-            id = result.getItemHolder().unwrapKey().orElseThrow().location();
+            id = result.typeHolder().unwrapKey().orElseThrow().location();
         }
         var builder = Advancement.Builder.advancement()
                 .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id))

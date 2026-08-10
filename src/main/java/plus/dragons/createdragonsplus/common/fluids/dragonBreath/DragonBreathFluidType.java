@@ -129,7 +129,7 @@ public final class DragonBreathFluidType extends SolidRenderFluidType {
     @Override
     public void onVaporize(@Nullable Player player, Level level, BlockPos pos, FluidStack stack) {
         SoundEvent sound = this.getSound(player, level, pos, SoundActions.FLUID_VAPORIZE);
-        level.playSound(player, pos, sound != null ? sound : SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.5F, 2.6F + (level.random.nextFloat() - level.random.nextFloat()) * 0.8F);
+        level.playSound(player, pos, sound != null ? sound : SoundEvents.FIRE_EXTINGUISH, SoundSource.BLOCKS, 0.5F, 2.6F + (level.getRandom().nextFloat() - level.getRandom().nextFloat()) * 0.8F);
 
         AreaEffectCloud aoe = new AreaEffectCloud(level, pos.getX(), pos.getY(), pos.getZ());
         aoe.setOwner(player);

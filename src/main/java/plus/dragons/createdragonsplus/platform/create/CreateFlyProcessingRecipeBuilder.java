@@ -96,7 +96,7 @@ public final class CreateFlyProcessingRecipeBuilder<R extends Recipe<?>> {
         if (chance < 0 || chance > 1) {
             throw new IllegalArgumentException("Output chance must be between 0 and 1");
         }
-        params.results.add(new ProcessingOutput(stack.getItemHolder(), stack.getCount(), stack.getComponentsPatch(), chance));
+        params.results.add(new ProcessingOutput(stack.typeHolder(), stack.getCount(), stack.getComponentsPatch(), chance));
         return this;
     }
 

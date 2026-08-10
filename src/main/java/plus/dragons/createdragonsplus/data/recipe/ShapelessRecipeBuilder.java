@@ -64,7 +64,7 @@ public class ShapelessRecipeBuilder extends BaseShapelessRecipeBuilder<Shapeless
     @Override
     public RecipeHolder<ShapelessRecipe> build() {
         if (id == null) {
-            id = result.getItemHolder().unwrapKey().orElseThrow().location();
+            id = result.typeHolder().unwrapKey().orElseThrow().location();
         }
         var recipe = new ShapelessRecipe(this.group, RecipeBuilder.determineBookCategory(this.category), this.result, this.ingredients);
         return new RecipeHolder<>(this.id, recipe);
@@ -73,7 +73,7 @@ public class ShapelessRecipeBuilder extends BaseShapelessRecipeBuilder<Shapeless
     @Override
     public @Nullable AdvancementHolder buildAdvancement() {
         if (id == null) {
-            id = result.getItemHolder().unwrapKey().orElseThrow().location();
+            id = result.typeHolder().unwrapKey().orElseThrow().location();
         }
         var builder = Advancement.Builder.advancement()
                 .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id))

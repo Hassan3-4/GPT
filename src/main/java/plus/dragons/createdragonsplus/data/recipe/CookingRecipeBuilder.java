@@ -83,7 +83,7 @@ public class CookingRecipeBuilder<R extends AbstractCookingRecipe> extends BaseS
     @Override
     public RecipeHolder<R> build() {
         if (id == null) {
-            id = result.getItemHolder().unwrapKey().orElseThrow().location();
+            id = result.typeHolder().unwrapKey().orElseThrow().location();
         }
         var recipe = factory.create(group, category, ingredient, result, experience, cookingTime);
         return new RecipeHolder<>(id, recipe);
@@ -92,7 +92,7 @@ public class CookingRecipeBuilder<R extends AbstractCookingRecipe> extends BaseS
     @Override
     public @Nullable AdvancementHolder buildAdvancement() {
         if (id == null) {
-            id = result.getItemHolder().unwrapKey().orElseThrow().location();
+            id = result.typeHolder().unwrapKey().orElseThrow().location();
         }
         var builder = Advancement.Builder.advancement()
                 .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id))

@@ -58,7 +58,7 @@ public class SingleItemRecipeBuilder extends BaseSingleItemRecipeBuilder<SingleI
     @Override
     public RecipeHolder<SingleItemRecipe> build() {
         if (id == null) {
-            id = result.getItemHolder().unwrapKey().orElseThrow().location();
+            id = result.typeHolder().unwrapKey().orElseThrow().location();
         }
         var recipe = this.factory.create(group, ingredient, result);
         return new RecipeHolder<>(id, recipe);
@@ -67,7 +67,7 @@ public class SingleItemRecipeBuilder extends BaseSingleItemRecipeBuilder<SingleI
     @Override
     public @Nullable AdvancementHolder buildAdvancement() {
         if (id == null) {
-            id = result.getItemHolder().unwrapKey().orElseThrow().location();
+            id = result.typeHolder().unwrapKey().orElseThrow().location();
         }
         var builder = Advancement.Builder.advancement()
                 .addCriterion("has_the_recipe", RecipeUnlockedTrigger.unlocked(id))

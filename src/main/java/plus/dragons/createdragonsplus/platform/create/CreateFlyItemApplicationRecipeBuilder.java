@@ -89,7 +89,7 @@ public final class CreateFlyItemApplicationRecipeBuilder<R extends ItemApplicati
         if (chance < 0 || chance > 1) {
             throw new IllegalArgumentException("Output chance must be between 0 and 1");
         }
-        results.add(new ProcessingOutput(stack.getItemHolder(), stack.getCount(), stack.getComponentsPatch(), chance));
+        results.add(new ProcessingOutput(stack.typeHolder(), stack.getCount(), stack.getComponentsPatch(), chance));
         return this;
     }
 

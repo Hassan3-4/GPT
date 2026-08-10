@@ -42,7 +42,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.EntityTypes;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.animal.feline.Cat;
@@ -132,7 +132,7 @@ public class ColoringFanProcessingType implements FanProcessingType {
             return null;
         return serverLevel.recipeAccess()
                 .getRecipeFor(CDPRecipes.COLORING.getType(), new ColoringRecipeInput(this.variant.id(), stack), level)
-                .map(recipe -> RecipeApplier.applyRecipeOn(level.random, stack.getCount(),
+                .map(recipe -> RecipeApplier.applyRecipeOn(level.getRandom(), stack.getCount(),
                         new ColoringRecipeInput(this.variant.id(), stack), recipe.value()))
                 .or(() -> CDPIntegrationContributions.processColoringByCompat(this.variant, stack, level))
                 .or(() -> processByCrafting(stack, level)
@@ -159,11 +159,11 @@ public class ColoringFanProcessingType implements FanProcessingType {
 
     @Override
     public void spawnProcessingParticles(Level level, Vec3 pos) {
-        if (level.random.nextInt(8) == 0) {
+        if (level.getRandom().nextInt(8) == 0) {
             level.addParticle(new DustParticleOptions(this.variant.color(), 2),
-                    pos.x + (level.random.nextFloat() - .5f) * .5f,
+                    pos.x + (level.getRandom().nextFloat() - .5f) * .5f,
                     pos.y + .5f,
-                    pos.z + (level.random.nextFloat() - .5f) * .5f,
+                    pos.z + (level.getRandom().nextFloat() - .5f) * .5f,
                     0, 1 / 8f, 0);
         }
     }
@@ -180,13 +180,13 @@ public class ColoringFanProcessingType implements FanProcessingType {
             return;
         if (entity instanceof LivingEntity livingEntity)
             this.applyColoring(livingEntity, level);
-        if (entity instanceof EnderMan || entity.getType() == EntityType.SNOW_GOLEM || entity.getType() == EntityType.BLAZE) {
+        if (entity instanceof EnderMan || entity.getType() == EntityTypes.SNOW_GOLEM || entity.getType() == EntityTypes.BLAZE) {
             entity.hurt(entity.damageSources().drown(), 2);
         }
         if (entity.isOnFire()) {
             entity.clearFire();
             level.playSound(null, entity.blockPosition(), SoundEvents.GENERIC_EXTINGUISH_FIRE,
-                    SoundSource.NEUTRAL, 0.7F, 1.6F + (level.random.nextFloat() - level.random.nextFloat()) * 0.4F);
+                    SoundSource.NEUTRAL, 0.7F, 1.6F + (level.getRandom().nextFloat() - level.getRandom().nextFloat()) * 0.4F);
         }
     }
 
@@ -234,7 +234,7 @@ public class ColoringFanProcessingType implements FanProcessingType {
                 continue;
             if (isIgnoredAutomaticColoringRecipe(recipe) || !recipe.matches(input, level))
                 continue;
-            var result = recipe.assemble(input, level.registryAccess());
+            var result = recipe.assemble(input);
             if (result.getCount() == resultCount)
                 return Optional.of(result);
         }
@@ -336,7 +336,7 @@ public class ColoringFanProcessingType implements FanProcessingType {
             return this.processByCrafting(stack, level);
         var coloringRecipe = serverLevel.recipeAccess().getRecipeFor(CDPRecipes.COLORING.getType(), coloringInput, level);
         if (coloringRecipe.isPresent()) {
-            ItemStack result = coloringRecipe.get().value().assemble(coloringInput, level.registryAccess());
+            ItemStack result = coloringRecipe.get().value().assemble(coloringInput);
             return Optional.of(result);
         }
         return this.processByCrafting(stack, level);

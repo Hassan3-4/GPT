@@ -69,7 +69,7 @@ public final class CreateFlySequencedAssemblyRecipeBuilder {
     }
 
     public CreateFlySequencedAssemblyRecipeBuilder addOutput(ItemStack item, float chance) {
-        ProcessingOutput output = new ProcessingOutput(item.getItemHolder(), item.getCount(), item.getComponentsPatch(), chance);
+        ProcessingOutput output = new ProcessingOutput(item.typeHolder(), item.getCount(), item.getComponentsPatch(), chance);
         if (result == null) {
             result = output;
         } else {

@@ -87,11 +87,11 @@ public class SandingFanProcessingType implements DynamicParticleFanProcessingTyp
         var input = new SingleRecipeInput(stack);
         var sanding = recipeManager.getRecipeFor(CDPRecipes.SANDING.getType(), input, level);
         if (sanding.isPresent())
-            return RecipeApplier.applyRecipeOn(level.random, stack.getCount(), input, sanding.get().value());
+            return RecipeApplier.applyRecipeOn(level.getRandom(), stack.getCount(), input, sanding.get().value());
         var polishing = recipeManager.getRecipeFor(AllRecipeTypes.SANDPAPER_POLISHING, input, level)
                 .filter(AllRecipeTypes.CAN_BE_AUTOMATED);
         if (polishing.isPresent()) {
-            ItemStack result = polishing.get().value().assemble(input, level.registryAccess());
+            ItemStack result = polishing.get().value().assemble(input);
             return ItemHelper.multipliedOutput(result, stack.getCount());
         }
         return CDPIntegrationContributions.processSandingByCompat(stack, level).orElse(null);
@@ -108,12 +108,12 @@ public class SandingFanProcessingType implements DynamicParticleFanProcessingTyp
 
     @Override
     public void spawnProcessingParticles(Level level, Vec3 pos, @Nullable ParticleData data) {
-        if (level.random.nextInt(8) == 0) {
+        if (level.getRandom().nextInt(8) == 0) {
             var state = data == null ? Blocks.SAND.defaultBlockState() : data.state;
             level.addParticle(new BlockParticleOption(ParticleTypes.FALLING_DUST, state),
-                    pos.x + (level.random.nextFloat() - .5f) * .5f,
+                    pos.x + (level.getRandom().nextFloat() - .5f) * .5f,
                     pos.y + .5f,
-                    pos.z + (level.random.nextFloat() - .5f) * .5f,
+                    pos.z + (level.getRandom().nextFloat() - .5f) * .5f,
                     0, 0, 0);
         }
         if (data != null)
@@ -152,8 +152,8 @@ public class SandingFanProcessingType implements DynamicParticleFanProcessingTyp
                 // Play sound only once per block pos
                 if (playedSoundPos.add(BlockPos.containing(pos))) {
                     AllSoundEvents.SANDING_SHORT.playAt(level, pos,
-                            0.3F + 0.1F * level.random.nextFloat(),
-                            0.9F + 0.2F * level.random.nextFloat(),
+                            0.3F + 0.1F * level.getRandom().nextFloat(),
+                            0.9F + 0.2F * level.getRandom().nextFloat(),
                             true);
                 }
             } else if (!playedSoundPos.isEmpty()) {

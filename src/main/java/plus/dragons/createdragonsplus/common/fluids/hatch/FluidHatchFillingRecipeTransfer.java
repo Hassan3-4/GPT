@@ -52,7 +52,7 @@ public class FluidHatchFillingRecipeTransfer {
         return findRecipe(level, stack, toFill)
                 .map(RecipeHolder::value)
                 .map(recipe -> {
-                    ItemStack result = recipe.assemble(new FillingInput(stack, toFill), level.registryAccess());
+                    ItemStack result = recipe.assemble(new FillingInput(stack, toFill));
                     availableFluid.decrement(requiredAmount);
                     stack.shrink(1);
                     return result;

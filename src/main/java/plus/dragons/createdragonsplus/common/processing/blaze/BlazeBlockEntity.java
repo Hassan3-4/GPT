@@ -155,8 +155,8 @@ public abstract class BlazeBlockEntity extends SmartBlockEntity {
     protected void playSound() {
         assert level != null;
         level.playSound(null, worldPosition, SoundEvents.BLAZE_SHOOT, SoundSource.BLOCKS,
-                .125f + level.random.nextFloat() * .125f,
-                .75f - level.random.nextFloat() * .25f);
+                .125f + level.getRandom().nextFloat() * .125f,
+                .75f - level.getRandom().nextFloat() * .25f);
     }
 
     protected void spawnParticles(HeatLevel heatLevel) {
@@ -197,7 +197,7 @@ public abstract class BlazeBlockEntity extends SmartBlockEntity {
     protected void spawnParticleBurst(boolean soul) {
         assert level != null;
         Vec3 c = VecHelper.getCenterOf(worldPosition);
-        RandomSource random = level.random;
+        RandomSource random = level.getRandom();
         for (int i = 0; i < 20; i++) {
             Vec3 offset = VecHelper.offsetRandomly(Vec3.ZERO, random, .5f)
                     .multiply(1, .25f, 1)

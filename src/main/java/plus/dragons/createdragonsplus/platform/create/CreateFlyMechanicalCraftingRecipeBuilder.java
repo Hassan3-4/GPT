@@ -76,7 +76,7 @@ public final class CreateFlyMechanicalCraftingRecipeBuilder {
     }
 
     public void build(RecipeOutput output) {
-        Identifier id = result.getItemHolder().unwrapKey().orElseThrow().identifier();
+        Identifier id = result.typeHolder().unwrapKey().orElseThrow().identifier();
         build(output, id);
     }
 }

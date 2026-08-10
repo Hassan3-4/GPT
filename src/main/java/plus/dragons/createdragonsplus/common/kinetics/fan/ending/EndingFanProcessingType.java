@@ -84,19 +84,19 @@ public class EndingFanProcessingType implements FanProcessingType {
         var input = new SingleRecipeInput(stack);
         return recipeManager
                 .getRecipeFor(CDPRecipes.ENDING.getType(), input, level)
-                .map(recipe -> RecipeApplier.applyRecipeOn(level.random, stack.getCount(), input, recipe.value()))
+                .map(recipe -> RecipeApplier.applyRecipeOn(level.getRandom(), stack.getCount(), input, recipe.value()))
                 .or(() -> CDPIntegrationContributions.processEndingByCompat(stack, level))
                 .orElse(null);
     }
 
     @Override
     public void spawnProcessingParticles(Level level, Vec3 pos) {
-        if (level.random.nextInt(8) == 0) {
+        if (level.getRandom().nextInt(8) == 0) {
             level.addParticle(
                     PowerParticleOption.create(ParticleTypes.DRAGON_BREATH, 1.0f),
-                    pos.x + (level.random.nextFloat() - .5f) * .5f,
+                    pos.x + (level.getRandom().nextFloat() - .5f) * .5f,
                     pos.y + .5f,
-                    pos.z + (level.random.nextFloat() - .5f) * .5f,
+                    pos.z + (level.getRandom().nextFloat() - .5f) * .5f,
                     0, 1 / 8f, 0);
         }
     }

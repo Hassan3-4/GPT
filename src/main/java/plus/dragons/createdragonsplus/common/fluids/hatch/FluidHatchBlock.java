@@ -230,7 +230,7 @@ public class FluidHatchBlock extends HorizontalDirectionalBlock implements IBE<F
     private static void playTransferSound(Level level, BlockPos pos, FluidStack fluid, boolean tankToItem) {
         SoundEvent sound = tankToItem ? FluidHelper.getFillSound(fluid) : FluidHelper.getEmptySound(fluid);
         float pitch = Mth.clamp(1 - fluid.getAmount() / 16000F, 0, 1) / 1.5F + .5F
-                + (level.random.nextFloat() - .5F) / 4F;
+                + (level.getRandom().nextFloat() - .5F) / 4F;
         level.playSound(null, pos, sound, SoundSource.BLOCKS, .5F, pitch);
     }
 
