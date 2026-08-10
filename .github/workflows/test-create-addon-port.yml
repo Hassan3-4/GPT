@@ -14,13 +14,6 @@ jobs:
   build-test:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Create Fly 26.2
-        uses: actions/checkout@v4
-        with:
-          repository: ZurrTum/Create-Fly
-          ref: 26.2
-          path: Create-Fly
-
       - name: Checkout CDP 26.2 port
         uses: actions/checkout@v4
         with:
@@ -42,17 +35,13 @@ jobs:
           java-version: '25'
           cache: gradle
 
-      - name: Build Create Fly
-        working-directory: Create-Fly
-        run: |
-          chmod +x gradlew
-          ./gradlew clean build --stacktrace --no-daemon
-
       - name: Build Create Dragons Plus
         working-directory: CreateDragonsPlus
+        shell: bash
         run: |
           chmod +x gradlew
-          ./gradlew clean build --stacktrace --no-daemon
+          set -o pipefail
+          ./gradlew clean build --stacktrace --warning-mode all --no-daemon 2>&1 | tee ../cdp-build.log
 
       - name: Build Create Enchantment Industry
         working-directory: CreateEnchantmentIndustry
@@ -62,12 +51,14 @@ jobs:
           set -o pipefail
           ./gradlew clean build --stacktrace --warning-mode all --no-daemon 2>&1 | tee ../cei-build.log
 
-      - name: Upload CEI compiler log
+      - name: Upload compiler logs
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: cei-build-log
-          path: cei-build.log
+          name: create-addon-build-logs
+          path: |
+            cdp-build.log
+            cei-build.log
           if-no-files-found: warn
 
       - name: Upload CEI jar
