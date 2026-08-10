@@ -1,0 +1,42 @@
+name: Bootstrap CEI 26.2 port
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '.github/workflows/bootstrap-cei-port.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  bootstrap:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout workspace
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Checkout CEI Fabric 1.21.11 base
+        uses: actions/checkout@v4
+        with:
+          repository: YU322142/CreateEnchantmentIndustry
+          ref: fabric/1.21.11
+          path: upstream-cei
+
+      - name: Import upstream source to dedicated branch
+        shell: bash
+        run: |
+          set -euxo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -B cei-26.2-port
+          find . -mindepth 1 -maxdepth 1 ! -name .git ! -name upstream-cei -exec rm -rf {} +
+          shopt -s dotglob
+          cp -a upstream-cei/* .
+          rm -rf upstream-cei .gitmodules
+          git add -A
+          git commit -m "Import CEI Fabric 1.21.11 port as 26.2 base"
+          git push --force origin cei-26.2-port
