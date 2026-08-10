@@ -1,0 +1,144 @@
+plugins {
+    id "net.fabricmc.fabric-loom-remap" version "1.17.13"
+    id "java-library"
+    id "maven-publish"
+}
+
+version = "2.4.2+fabric.1.21.11-hotfix.10"
+group = "plus.dragons.createenchantmentindustry"
+
+base {
+    archivesName = "create-enchantment-industry"
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven { url = "https://maven.dragons.plus/releases" }
+    maven { url = "https://maven.blamejared.com" }
+    maven { url = "https://maven.terraformersmc.com/releases" }
+    exclusiveContent {
+        forRepository {
+            maven { url = "https://api.modrinth.com/maven" }
+        }
+        filter { includeGroup "maven.modrinth" }
+    }
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:1.21.11"
+    mappings loom.officialMojangMappings()
+    modImplementation "net.fabricmc:fabric-loader:0.18.4"
+    modImplementation "net.fabricmc.fabric-api:fabric-api:0.141.4+1.21.11"
+    // Local sibling builds expose named development JARs for Loom's compile
+    // classpath; the remapped libs JARs are for a production mods directory.
+    def localCreateFly = file("../Create-Fly/build/devlibs/create-fly-1.21.11-6.0.9-15-dev.jar")
+    if (!localCreateFly.isFile()) {
+        throw new GradleException("Build the sibling YU322142/Create-Fly fabric/1.21.11 branch first")
+    }
+    compileOnly files(localCreateFly)
+    runtimeOnly files(localCreateFly)
+    modImplementation "maven.modrinth:forge-config-api-port:21.11.1"
+    modCompileOnly "maven.modrinth:jei:27.4.0.15"
+    // CEI requires CDP at runtime.  Use the finished Fabric port as a normal
+    // Loom mod dependency so its platform recipe builders are remapped but
+    // are not copied into CEI's own output JAR.
+    def localCreateDragonsPlus = file("../CreateDragonsPlus/build/devlibs/create-dragons-plus-1.11.2-beta.4+fabric.1.21.11-dev.jar")
+    if (!localCreateDragonsPlus.isFile()) {
+        throw new GradleException("Build the sibling YU322142/CreateDragonsPlus fabric/1.21.11 branch first")
+    }
+    compileOnly files(localCreateDragonsPlus)
+    runtimeOnly files(localCreateDragonsPlus)
+    compileOnly "javax.annotation:javax.annotation-api:1.3.2"
+    compileOnly "com.google.code.findbugs:jsr305:3.0.2"
+}
+
+loom {
+    runs {
+        server {
+            vmArg "-Dfabric-tag-conventions-v2.missingTagTranslationWarning=VERBOSE"
+        }
+        datagen {
+            server()
+            name = "CEI Data Generation"
+            vmArg "-Dfabric-api.datagen"
+            vmArg "-Dfabric-api.datagen.output-dir=${file('src/fabricGenerated/resources')}"
+            vmArg "-Dfabric-api.datagen.modid=create_enchantment_industry"
+        }
+    }
+}
+
+sourceSets.main.resources {
+    // Keep Fabric output separate from the unported NeoForge generator dump.
+    // This makes the final JAR contain only validated 1.21.11 resources.
+    srcDir "src/fabricGenerated/resources"
+    srcDir "src/main/translations"
+}
+
+// Reuse the Create Fly-compatible recipe builders from the CDP Fabric port.
+// Only this self-contained data-generation subset is compiled here; CEI does
+// not inherit the unfinished runtime portions of that project.
+sourceSets.main.java {
+    srcDir "../CreateDragonsPlus/src/main/java"
+    include "plus/dragons/createenchantmentindustry/**"
+    include "plus/dragons/createdragonsplus/data/recipe/CreateRecipeBuilders.java"
+}
+
+processResources {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    // A mod JAR is loaded as both a client resource pack and a server data
+    // pack.  The legacy translation-only pack.mcmeta cannot describe both
+    // 1.21.11 pack formats, and Fabric does not require it for mod resources.
+    exclude "pack.mcmeta"
+    // The old generated tree also contains obsolete NeoForge data.  Keep the
+    // still-valid client assets from it explicitly: those include the English
+    // language file, block states and item models for CEI's Fabric registry.
+    from("src/generated/resources") {
+        include "assets/**"
+        // CEI's Fabric data-map loader intentionally consumes the original
+        // data_maps JSON format, including guarded optional-mod entries.
+        // The regular tag files are loader-neutral and are also required for
+        // enchanting, printer deny-lists and Create fluid behaviour.
+        include "data/create_enchantment_industry/data_maps/**"
+        include "data/**/tags/**"
+    }
+    inputs.property "version", project.version
+    filesMatching("fabric.mod.json") {
+        expand "version": project.version
+    }
+    exclude "META-INF/**"
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.release.set(21)
+    options.encoding = "UTF-8"
+    options.compilerArgs.addAll(["-Xmaxerrs", "2000", "-Xdiags:verbose"])
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_21
+    targetCompatibility = JavaVersion.VERSION_21
+    withSourcesJar()
+}
+
+tasks.withType(AbstractArchiveTask).configureEach {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}
+
+tasks.named("jar", Jar) {
+    from("LICENSE.txt")
+    from("UNOFFICIAL_FORK_NOTICE.md")
+    from("../CreateDragonsPlus/LICENSE.txt") { rename { "LICENSE-CDP.txt" } }
+    from("../CreateDragonsPlus/LICENSE-CREATE.txt") { rename { "LICENSE-CREATE.txt" } }
+    from("../CreateDragonsPlus/LICENSING.txt") { rename { "LICENSING-CDP.txt" } }
+    from("../CreateDragonsPlus/UNOFFICIAL_FORK_NOTICE.md") { rename { "UNOFFICIAL_FORK_NOTICE-CDP.md" } }
+}
+
+tasks.named("sourcesJar", Jar) {
+    from("LICENSE.txt")
+    from("UNOFFICIAL_FORK_NOTICE.md")
+    from("../CreateDragonsPlus/LICENSE.txt") { rename { "LICENSE-CDP.txt" } }
+    from("../CreateDragonsPlus/LICENSE-CREATE.txt") { rename { "LICENSE-CREATE.txt" } }
+    from("../CreateDragonsPlus/LICENSING.txt") { rename { "LICENSING-CDP.txt" } }
+    from("../CreateDragonsPlus/UNOFFICIAL_FORK_NOTICE.md") { rename { "UNOFFICIAL_FORK_NOTICE-CDP.md" } }
+}

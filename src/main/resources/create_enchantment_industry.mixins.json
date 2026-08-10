@@ -1,0 +1,30 @@
+{
+  "required": true,
+  "priority": 1100,
+  "package": "plus.dragons.createenchantmentindustry.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "mixins": [
+    "ConnectivityHandlerMixin",
+    "BlockMixin",
+    "CreateNBTProcessorsMixin",
+    "CrushingWheelControllerBlockEntityMixin",
+    "DeployerFakePlayerMixin",
+    "DeployerHandlerMixin",
+    "EnchantmentHelperMixin",
+    "FillingBySpoutMixin",
+    "LightningBoltMixin",
+    "OpenEndFluidHandlerMixin",
+    "PlayerMixin",
+    "ServerPlayerStatMixin",
+    "SmartBlockEntityMixin"
+  ],
+  "client": [
+    "client.ExperienceLanternGoggleMixin",
+    "client.PrinterGoggleMixin",
+    "client.GrindstoneDrainGoggleMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "minVersion": "0.8"
+}

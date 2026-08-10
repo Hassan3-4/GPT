@@ -1,0 +1,6 @@
+{
+  "type": "create_enchantment_industry:grinding",
+  "fluid_results": [{ "id": "create_enchantment_industry:experience", "amount": 972 }],
+  "ingredients": ["ars_nouveau:greater_experience_gem"],
+  "fabric:load_conditions": [{ "condition": "fabric:all_mods_loaded", "values": ["ars_nouveau"] }]
+}

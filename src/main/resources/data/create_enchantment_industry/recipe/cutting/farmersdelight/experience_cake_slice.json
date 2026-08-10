@@ -1,0 +1,25 @@
+{
+  "fabric:load_conditions": [
+    {
+      "condition": "fabric:all_mods_loaded",
+      "values": ["farmersdelight"]
+    }
+  ],
+  "type": "farmersdelight:cutting",
+  "ingredients": [
+    {
+      "item": "create_enchantment_industry:experience_cake"
+    }
+  ],
+  "result": [
+    {
+      "item": {
+        "count": 4,
+        "id": "create_enchantment_industry:experience_cake_slice"
+      }
+    }
+  ],
+  "tool": {
+    "tag": "c:tools/knife"
+  }
+}

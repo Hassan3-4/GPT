@@ -1,0 +1,6 @@
+{
+  "model": {
+    "type": "create_enchantment_industry:model/classic_blaze_enchanter",
+    "base": "create_enchantment_industry:item/classic_blaze_enchanter"
+  }
+}
