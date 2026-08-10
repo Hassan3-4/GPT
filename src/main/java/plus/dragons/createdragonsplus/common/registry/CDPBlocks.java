@@ -13,18 +13,13 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
 import plus.dragons.createdragonsplus.common.CDPCommon;
 import plus.dragons.createdragonsplus.common.fluids.hatch.FluidHatchBlock;
 
-/**
- * Runtime registrations for CDP blocks.
- *
- * <p>The corresponding block/item models, loot tables and tags are shipped as
- * generated resources. Fabric can therefore register the live objects directly
- * instead of relying on NeoForge's deferred registries and Registrate.</p>
- */
+/** CEI-required Fluid Hatch registration for Minecraft 26.2. */
 public final class CDPBlocks {
     public static final ModTags MOD_TAGS = new ModTags();
     private static final ResourceKey<Block> FLUID_HATCH_KEY = ResourceKey.create(
@@ -33,7 +28,7 @@ public final class CDPBlocks {
     public static final FluidHatchBlock FLUID_HATCH = Registry.register(
             BuiltInRegistries.BLOCK,
             FLUID_HATCH_KEY,
-            new FluidHatchBlock(BlockBehaviour.Properties.ofFullCopy(net.minecraft.world.level.block.Blocks.COPPER_BLOCK)
+            new FluidHatchBlock(BlockBehaviour.Properties.ofFullCopy(Blocks.COPPER_BLOCK.weathering().unaffected())
                     .mapColor(MapColor.COLOR_GRAY)
                     .setId(FLUID_HATCH_KEY)));
 
