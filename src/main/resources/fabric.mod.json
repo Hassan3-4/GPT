@@ -5,7 +5,7 @@
   "name": "Create: Enchantment Industry",
   "description": "Enchantment, Experience, Enhancement and Enlightening - with Create",
   "authors": ["DragonsPlus"],
-  "contributors": ["YU322142 (unofficial Fabric 1.21.11 port)"],
+  "contributors": ["YU322142 (unofficial Fabric 1.21.11 port)", "Hassan3-4 26.2 port workspace"],
   "contact": {
     "homepage": "https://github.com/DragonsPlusMinecraft/CreateEnchantmentIndustry",
     "sources": "https://github.com/YU322142/CreateEnchantmentIndustry",
@@ -21,12 +21,12 @@
   },
   "mixins": ["create_enchantment_industry.mixins.json"],
   "depends": {
-    "fabricloader": ">=0.18.4",
-    "minecraft": ">=1.21.11 <1.22",
-    "java": ">=21",
-    "fabric-api": ">=0.141.4",
-    "forgeconfigapiport": ">=21.11.1",
-    "create": ">=6.0.9-7",
-    "create_dragons_plus": ">=1.11.2-beta.3"
+    "fabricloader": ">=0.19.3",
+    "minecraft": ">=26.2- <26.3-",
+    "java": ">=25",
+    "fabric-api": ">=0.152.0",
+    "forgeconfigapiport": ">=26.2.1",
+    "create": ">=6.0.9-1",
+    "create_dragons_plus": ">=1.11.2-beta.4"
   }
 }
